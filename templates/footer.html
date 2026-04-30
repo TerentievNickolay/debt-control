@@ -1,0 +1,33 @@
+<footer class="bg-dark text-white py-2">
+    <div class="container text-end me-1 px-2">
+        <div class="mb-1 d-flex justify-content-end align-items-center">
+            <i class="bi bi-building me-1 text-primary"></i>
+            <div>
+                <span class="department-name text-white fw-bold">
+                    Отдел автоматизации и поддержки бизнес-процессов
+                </span>
+                <br>
+                <span class="company-name font-serif text-light">
+                    ОП "Энергосбыт Донецк" <span class="copyright text-white">©</span>
+                    {% now "Y" as current_year %}
+                    {% if current_year != "2025" %}
+                        2025 - {{ current_year }}
+                    {% else %}
+                        2025    
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        <div>
+            {% comment %} <span class="text-white">
+                <i class="text-white small">Разработчики:</i>
+                <img src="/static/img/kvitchuk.jpg" class="dev-img rounded-5" title="Квитчук И.В.">
+                <img src="/static/img/stadnik.jpg" class="dev-img rounded-5" title="Стадник Е.С.">              
+                <img src="/static/img/terentiev.jpg" class="dev-img rounded-5" title="Терентьев Н.А.">
+                <img src="/static/img/milyutin.jpg" class="dev-img rounded-5" title="Милютин А.В."> {% endcomment %}
+                
+                
+            </span>
+        </div>
+    </div>
+</footer>

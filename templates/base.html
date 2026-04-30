@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Мой проект{% endblock %}</title>
+    <link rel="icon" href="{% static 'img/atomlogo.ico' %}">
+    <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+        {% include 'header.html' %}
+    <div class="d-flex content-end-page">
+        <div class="px-2 my-4 {% if request.path != '/login/'%}col-md-12{%else%}col-md-12{% endif %} justify-content-center {% if request.path == '/'%}align-content-start{% endif %}">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    {% comment %} {% include 'footer.html' %} {% endcomment %}
+    <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'index.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

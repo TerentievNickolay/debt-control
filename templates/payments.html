@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Долг.Контроль{% endblock %}
+
+{% block content %}
+    {% comment %} <div class="row m-2 d-flex justify-content-center">
+        <div class="col-md-6 d-flex m-2">
+            {{ form.date_from }}
+            {{ form.date_to }}
+            <button id="reportAcquiringPayment" onclick="reportAcquiringPayment()" class="btn text-white form-control mx-2">Сформировать отчет</button>
+        </div>  
+    </div> {% endcomment %}
+    <div class="m-2 justify-content-center" id="resultTable">
+    </div>
+
+    <!-- === AI ЧАТ ПОМОЩНИК === -->
+<div id="ai-chat-widget">
+    <!-- Кнопка открытия (показана когда чат закрыт) -->
+    <button id="ai-chat-btn" onclick="openAiChat()">
+        🤖 AI Ассистент
+    </button>
+    
+    <!-- Окно чата -->
+    <div id="ai-chat-window" class="chat-hidden">
+        <div class="chat-header">
+            <div class="header-left">
+                <span>AI Ассистент</span>
+                <small class="status-online">● онлайн</small>
+            </div>
+            <div class="header-buttons">
+                <!-- Кнопка свернуть -->
+                <button class="chat-minimize-btn" onclick="minimizeAiChat()" title="Свернуть">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M4 8a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1z"/>
+                    </svg>
+                </button>
+                <!-- Кнопка закрыть -->
+                <button class="chat-close-btn" onclick="closeAiChat()" title="Закрыть">×</button>
+            </div>
+        </div>
+        <div class="chat-body" id="ai-chat-messages">
+            <div class="message bot-message">
+                Привет! Я ваш виртуальный помощник. Чем могу помочь?
+            </div>
+        </div>
+        <div id="ai-typing-indicator" class="typing-indicator hidden">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="ai-chat-input" placeholder="Задайте вопрос..." autocomplete="off">
+            <button id="ai-send-btn" onclick="sendAiMessage()">➤</button>
+        </div>
+    </div>
+    
+    <!-- Свернутая кнопка (показана когда чат свернут) -->
+    <button id="ai-chat-minimized-btn" class="chat-minimized hidden" onclick="restoreAiChat()">
+        💬
+    </button>
+</div>
+
+{% endblock %}
