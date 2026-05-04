@@ -2,6 +2,7 @@
 venv/
 .venv/
 env/
+templates_strorage/
 
 # Word файлы
 *.doc
