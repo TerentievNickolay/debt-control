@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'payment_app',
+    'ai_chat',
 ]
 
 MIDDLEWARE = [

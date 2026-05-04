@@ -4,15 +4,7 @@ var server = "";
 
 
 window.onload = function () {
-/* 
-    let menu = documnet.getElementById("menu_list");
-    menu.children.forEach((el) => {
-        //window.location
-    });
- */
-    //headerLoad();
     document.getElementById("title").innerHTML = document.title;
-    initSpeechRecognition();
     if (window.location.pathname.includes("/kvitancii"))
         $.ajax({
             type: "GET",
@@ -33,7 +25,6 @@ window.onload = function () {
         });
     else if (window.location.pathname.includes("volunteer"))
         document.addEventListener("DOMContentLoaded", function() {
-            // Обработчик для кнопки сохранения (если используется где-то ещё)
             const saveButton = document.getElementById("btnSave");
             if (saveButton) {
                 saveButton.addEventListener("click", saveVolunteer);
@@ -43,7 +34,6 @@ window.onload = function () {
         });
 }
 
-//отчет платежей по эквайрингу
 async function reportAcquiringPayment() {
     try {
         const dateFrom = document.getElementById('date_from').value;
@@ -57,7 +47,7 @@ async function reportAcquiringPayment() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken  // CSRF-токен из шаблона
+                'X-CSRFToken': csrfToken
             },
             body: JSON.stringify({
                 date_from: dateFrom,
@@ -87,8 +77,6 @@ async function reportAcquiringPayment() {
         alert('Произошла ошибка при скачивании файла: ' + error.message);
     }
 }
-
-
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -139,77 +127,74 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-function onFocusDoor(door)
-{
+function onFocusDoor(door) {
     door.parentElement.innerHTML = `<svg onclick="logoutBtn()" onmouseout="outFocusDoor(this)" xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
                                         <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
                                         <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
                                     </svg>`;
 }
-function outFocusDoor(door)
-{
-    door.parentElement.innerHTML = `<svg  onclick="logoutBtn()" onmouseover="onFocusDoor(this)" xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-door-closed" viewBox="0 0 16 16">
+
+function outFocusDoor(door) {
+    door.parentElement.innerHTML = `<svg onclick="logoutBtn()" onmouseover="onFocusDoor(this)" xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-door-closed" viewBox="0 0 16 16">
                                         <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"/>
                                         <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/>
                                     </svg>`;
 }
 
-function logoutBtn()
-{
+function logoutBtn() {
     window.location.href = "/logout/";
 }
 
 
-
 /* === AI CHAT FUNCTIONS === */
 
-// Открыть чат
 function openAiChat() {
     const chatWindow = document.getElementById('ai-chat-window');
     const chatBtn = document.getElementById('ai-chat-btn');
     const minimizedBtn = document.getElementById('ai-chat-minimized-btn');
-    
+
     chatWindow.classList.remove('chat-hidden', 'chat-minimized');
     chatWindow.classList.add('chat-visible');
     chatBtn.classList.add('hidden');
     minimizedBtn.classList.add('hidden');
-    
+
     setTimeout(() => document.getElementById('ai-chat-input').focus(), 300);
 }
 
-// Закрыть чат полностью
 function closeAiChat() {
     const chatWindow = document.getElementById('ai-chat-window');
     const chatBtn = document.getElementById('ai-chat-btn');
-    
+
     chatWindow.classList.remove('chat-visible', 'chat-minimized');
     chatWindow.classList.add('chat-hidden');
     chatBtn.classList.remove('hidden');
 }
 
-// Свернуть чат
 function minimizeAiChat() {
     const chatWindow = document.getElementById('ai-chat-window');
     const minimizedBtn = document.getElementById('ai-chat-minimized-btn');
-    
+
     chatWindow.classList.remove('chat-visible');
     chatWindow.classList.add('chat-minimized');
     minimizedBtn.classList.remove('hidden');
 }
 
-// Восстановить чат из свернутого состояния
 function restoreAiChat() {
     const chatWindow = document.getElementById('ai-chat-window');
     const minimizedBtn = document.getElementById('ai-chat-minimized-btn');
-    
+
     chatWindow.classList.remove('chat-minimized');
     chatWindow.classList.add('chat-visible');
     minimizedBtn.classList.add('hidden');
-    
+
     setTimeout(() => document.getElementById('ai-chat-input').focus(), 300);
 }
 
-// Обработка Enter в поле ввода
+function toggleResizeAiChat() {
+    const chatWindow = document.getElementById('ai-chat-window');
+    chatWindow.classList.toggle('chat-expanded');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const aiInput = document.getElementById('ai-chat-input');
     if (aiInput) {
@@ -219,19 +204,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Добавить сообщение
-function addAiMessage(text, sender) {
+function addAiMessage(text, sender, fileUrl = null) {
     const container = document.getElementById('ai-chat-messages');
     if (!container) return;
+
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('message');
     msgDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
     msgDiv.textContent = text;
+
+    if (fileUrl) {
+        const chip = document.createElement('a');
+        chip.href = fileUrl;
+        chip.download = '';
+        chip.className = 'file-chip';
+        chip.textContent = '📎 Скачать файл';
+        msgDiv.appendChild(chip);
+    }
+
     container.appendChild(msgDiv);
     container.scrollTop = container.scrollHeight;
 }
 
-// Отправить сообщение
+function useHint(text) {
+    const input = document.getElementById('ai-chat-input');
+    if (input) {
+        input.value = text;
+        input.focus();
+        sendAiMessage();
+    }
+}
+
 async function sendAiMessage() {
     const input = document.getElementById('ai-chat-input');
     const messageText = input?.value.trim();
@@ -245,20 +248,55 @@ async function sendAiMessage() {
     if (messagesContainer) messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
     try {
-        // ИМИТАЦИЯ ОТВЕТА (замените на fetch к вашему Django API)
-        await new Promise(r => setTimeout(r, 1500));
-        const botReply = "Это тестовый ответ. Подключите нейросеть для реальной работы.";
-        
+        const response = await fetch('/ai_chat/ask/stream/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({ message: messageText })
+        });
+
+        const data = await response.json();
         if (typingIndicator) typingIndicator.classList.add('hidden');
-        addAiMessage(botReply, 'bot');
+
+        const botReply = data.reply || data.error || 'Нет ответа';
+
+        // Создаём сообщение и печатаем побуквенно
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', 'bot-message');
+        msgDiv.textContent = '';
+        messagesContainer.appendChild(msgDiv);
+
+        // Эффект печатания
+        let i = 0;
+        const speed = 18; // мс на символ
+        function typeChar() {
+            if (i < botReply.length) {
+                msgDiv.textContent += botReply[i];
+                i++;
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                setTimeout(typeChar, speed);
+            } else if (data.file_url) {
+                // После текста добавляем кнопку файла
+                const chip = document.createElement('a');
+                chip.href = data.file_url;
+                chip.download = '';
+                chip.className = 'file-chip';
+                chip.textContent = '📎 Скачать файл';
+                msgDiv.appendChild(chip);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+        typeChar();
+
     } catch (error) {
         console.error('Chat error:', error);
         if (typingIndicator) typingIndicator.classList.add('hidden');
-        addAiMessage("Ошибка соединения.", 'bot');
+        addAiMessage('Ошибка соединения.', 'bot');
     }
 }
 
-// Получить CSRF токен
 function getCsrfToken() {
     const name = 'csrftoken';
     let cookieValue = null;

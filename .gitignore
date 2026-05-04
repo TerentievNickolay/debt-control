@@ -1,0 +1,13 @@
+# Виртуальное окружение
+venv/
+.venv/
+env/
+
+# Word файлы
+*.doc
+*.docx
+
+# Прочее
+__pycache__/
+*.pyc
+.DS_Store
