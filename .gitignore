@@ -2,7 +2,7 @@
 venv/
 .venv/
 env/
-templates_strorage/
+templates_storage/
 
 # Word файлы
 *.doc
